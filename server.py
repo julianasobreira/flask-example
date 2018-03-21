@@ -46,5 +46,19 @@ def remover_aluno(nome):
     
     return 'Aluno não encontrado', 404
 
+@app.route('/alunos/<string:nome>', methods=['PATCH'])
+def atualizar_aluno(nome):
+    novo_dados = request.get_json(silent=True)
+
+    if not novo_dados:
+      return 'É necessário enviar os dados do aluno', 400
+
+    for index, aluno in enumerate(alunos):
+      if aluno['nome'] == nome:
+        alunos[index]['módulo'] = novo_dados['módulo']
+        return jsonify(alunos[index]), 200
+    
+    return 'Aluno não encontrado', 404
+
 if __name__ == '__main__':
     app.run(debug=True)
