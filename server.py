@@ -46,14 +46,14 @@ def cadastrar_aluno():
     # o silent=True indica que, caso não seja enviado nenhum JSON, novo_aluno será None
     novo_aluno = request.get_json(silent=True)
 
-    # se os dados do aluno foram enviados
-    # adiciona no cadastro e retorna para o usuário o status 201
-    if novo_aluno:
-      alunos.append(novo_aluno)
-      return jsonify(novo_aluno), 201
+    # se os dados do aluno foram enviados, envia o status 400 indicando o problema
+    if not novo_aluno:
+      return 'É necessário enviar os dados do aluno', 400
 
-    # caso contrário, envia o status 400 indicando o problema
-    return 'É necessário enviar os dados do aluno', 400
+    # caso contrário,
+    # adiciona no cadastro e retorna para o usuário o status 201
+    alunos.append(novo_aluno)
+    return jsonify(novo_aluno), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
