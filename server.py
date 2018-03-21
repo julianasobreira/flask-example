@@ -2,7 +2,6 @@ import json
 from flask import Flask, jsonify
 app = Flask(__name__)
 
-# Nossa base de dado
 alunos = [{
   'nome': 'Ana Paula',
   'módulo': 1
@@ -12,14 +11,12 @@ alunos = [{
   'módulo': 1
 }]
 
-@app.route('/')
+@app.route('/alunos')
 def consultar_alunos():
     return jsonify(alunos)
 
-@app.route('/<string:nome>')
+@app.route('/alunos/<string:nome>')
 def consultar_aluno(nome):
-    print(nome)
-    aluno = None
     for aluno in alunos:
       if aluno['nome'] == nome:
         return jsonify(aluno)
@@ -27,6 +24,4 @@ def consultar_aluno(nome):
     return 'Aluno não encontrado', 404
 
 if __name__ == '__main__':
-    # Quando debug=True, o flask será atualizado a cada mudança no código
-    # facilitando o desenvolvimento
     app.run(debug=True)
