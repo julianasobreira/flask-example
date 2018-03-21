@@ -1,1 +1,1 @@
-# Etapa 2 - Consultar todos os alunos cadastrados
+# Etapa 3 - Consultar um aluno cadastrado

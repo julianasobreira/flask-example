@@ -16,6 +16,16 @@ alunos = [{
 def consultar_alunos():
     return jsonify(alunos)
 
+@app.route('/<string:nome>')
+def consultar_aluno(nome):
+    print(nome)
+    aluno = None
+    for aluno in alunos:
+      if aluno['nome'] == nome:
+        return jsonify(aluno)
+
+    return 'Aluno não encontrado', 404
+
 if __name__ == '__main__':
     # Quando debug=True, o flask será atualizado a cada mudança no código
     # facilitando o desenvolvimento
