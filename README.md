@@ -1,1 +1,1 @@
-# Etapa 3 - Cadastrar um aluno
+# Etapa 5 - Remover aluno do cadastro
