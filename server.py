@@ -12,8 +12,9 @@ alunos = [{
   'módulo': 1
 }]
 
-@app.route('/')
+@app.route('/alunos')
 def consultar_alunos():
+    # jsonify retorna um objeto JSON
     return jsonify(alunos)
 
 if __name__ == '__main__':
