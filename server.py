@@ -42,9 +42,9 @@ def remover_aluno(nome):
     for index, aluno in enumerate(alunos):
       if aluno['nome'] == nome:
         del alunos[index]
-        return 'O aluno foi removido cadastro', 201
+        return 'O aluno foi removido cadastro', 204
     
-    return 'Aluno não encontrado', 409
+    return 'Aluno não encontrado', 404
 
 if __name__ == '__main__':
     app.run(debug=True)
