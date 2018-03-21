@@ -1,1 +1,1 @@
-# Etapa 3 - Consultar um aluno cadastrado
+# Etapa 3 - Cadastrar um aluno

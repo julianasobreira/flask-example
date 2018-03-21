@@ -1,8 +1,22 @@
+##########################
+# 
+# DESAFIO
+# E se a pessoa tentar cadastrar um aluno que já existe na lista?
+# # Por exemplo, o usuário enviar um POST para /alunos com o seguinte json
+# {
+#   'nome': 'Ana Paula',
+#   'módulo': 1
+# }
+# 
+# Modifique o cadastrar_aluno para que o aluno não seja inserido no cadastro
+# e retorne a mensagem "O aluno já existe no cadastro" junto com o status 400
+# 
+##########################
+
 import json
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 app = Flask(__name__)
 
-# Nossa base de dado
 alunos = [{
   'nome': 'Ana Paula',
   'módulo': 1
@@ -12,21 +26,34 @@ alunos = [{
   'módulo': 1
 }]
 
-@app.route('/')
+@app.route('/alunos')
 def consultar_alunos():
     return jsonify(alunos)
 
-@app.route('/<string:nome>')
+@app.route('/alunos/<string:nome>')
 def consultar_aluno(nome):
-    print(nome)
-    aluno = None
     for aluno in alunos:
       if aluno['nome'] == nome:
         return jsonify(aluno)
 
     return 'Aluno não encontrado', 404
 
+# Se você utilizar um método diferente de GET
+# é necessário indicar aqui
+@app.route('/alunos', methods=['POST'])
+def cadastrar_aluno():
+    # request.get_json é utilizado para pegar o JSON enviado para a API 
+    # o silent=True indica que, caso não seja enviado nenhum JSON, novo_aluno será None
+    novo_aluno = request.get_json(silent=True)
+
+    # se os dados do aluno foram enviados
+    # adiciona no cadastro e retorna para o usuário o status 201
+    if novo_aluno:
+      alunos.append(novo_aluno)
+      return jsonify(novo_aluno), 201
+
+    # caso contrário, envia o status 400 indicando o problema
+    return 'É necessário enviar os dados do aluno', 400
+
 if __name__ == '__main__':
-    # Quando debug=True, o flask será atualizado a cada mudança no código
-    # facilitando o desenvolvimento
     app.run(debug=True)
